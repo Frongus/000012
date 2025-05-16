@@ -1,27 +1,44 @@
 #grid-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: 
+  grid-template-areas:
     "indexRow1 indexRow2 indexRow3";
-  gap: 16px;
+  gap: 20px;
   width: 95%;
 }
 
 #indexRow1 {
+  align-items: center;
+  text-align: center;
   grid-area: indexRow1;
-  background: #eee;
+  border: 1px solid var(--color-accent);
 }
 
 #indexRow2 {
+  align-items: center;
+  text-align: center;
   grid-area: indexRow2;
-  background: #ddd;
 }
 
 #indexRow3 {
+  align-items: center;
+  text-align: center;
   grid-area: indexRow3;
-  color: var(--color-secondary);
+}
+
+#logo {
+  font-size: 50px;
+}
+
+#logoImg {
+  transform: scale(0.9);
+}
+
+#indexInfoText {
+  font-size: 20px;
+  font-weight: lighter;
 }

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Draggable & Resizable Objects</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  #createBtn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 16px;
+    z-index: 2000;
+  }
+  .draggable {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    border: 2px solid #333;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    box-sizing: border-box;
+  }
+  .resize-handle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    bottom: 0;
+    background: #333;
+    cursor: se-resize;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<button id="createBtn">Create New Object</button>
+
+<!-- Initial objects -->
+<div id="box1" class="draggable" style="top:50px; left:50px;">
+  <div class="resize-handle"></div>
+</div>
+<div id="box2" class="draggable" style="top:200px; left:200px; background-color: lightgreen;">
+  <div class="resize-handle"></div>
+</div>
+<div id="box3" class="draggable" style="top:350px; left:100px; background-color: lightcoral;">
+  <div class="resize-handle"></div>
+</div>
+
+<script>
+  const createBtn = document.getElementById('createBtn');
+
+  // Initialize existing draggable elements
+  document.querySelectorAll('.draggable').forEach(initDraggable);
+
+  createBtn.addEventListener('click', () => {
+    const newDiv = document.createElement('div');
+    newDiv.classList.add('draggable');
+    newDiv.style.top = '100px';
+    newDiv.style.left = '100px';
+    newDiv.style.backgroundColor = randomColor();
+    // Add resize handle
+    const handle = document.createElement('div');
+    handle.className = 'resize-handle';
+    newDiv.appendChild(handle);
+
+    document.body.appendChild(newDiv);
+    initDraggable(newDiv);
+  });
+
+  // Utility to generate random pastel colors
+  function randomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 70%, 80%)`;
+  }
+
+  // Initialize draggable + resizable behavior
+  function initDraggable(el) {
+    el.style.position = 'absolute';
+
+    // ==== Dragging ====
+    let isDragging = false, offsetX = 0, offsetY = 0;
+
+    el.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('resize-handle')) return; // don't drag when resizing
+      e.preventDefault();
+      isDragging = true;
+      offsetX = e.clientX - el.offsetLeft;
+      offsetY = e.clientY - el.offsetTop;
+      el.style.zIndex = 1000;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      el.style.left = (e.clientX - offsetX) + 'px';
+      el.style.top = (e.clientY - offsetY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      el.style.zIndex = '';
+    });
+
+    // Touch drag
+    el.addEventListener('touchstart', (e) => {
+      if (e.target.classList.contains('resize-handle')) return;
+      const touch = e.touches[0];
+      isDragging = true;
+      offsetX = touch.clientX - el.offsetLeft;
+      offsetY = touch.clientY - el.offsetTop;
+      el.style.zIndex = 1000;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      el.style.left = (touch.clientX - offsetX) + 'px';
+      el.style.top = (touch.clientY - offsetY) + 'px';
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+      el.style.zIndex = '';
+    });
+
+    // ==== Resizing ====
+    const handle = el.querySelector('.resize-handle');
+    if (handle) {
+      let isResizing = false;
+      let startX, startY, startWidth, startHeight;
+
+      handle.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        isResizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = el.offsetWidth;
+        startHeight = el.offsetHeight;
+        el.style.zIndex = 1000;
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        let newWidth = startWidth + (e.clientX - startX);
+        let newHeight = startHeight + (e.clientY - startY);
+        newWidth = Math.max(40, newWidth);   // min size
+        newHeight = Math.max(40, newHeight);
+        el.style.width = newWidth + 'px';
+        el.style.height = newHeight + 'px';
+      });
+
+      document.addEventListener('mouseup', () => {
+        isResizing = false;
+        el.style.zIndex = '';
+      });
+
+      // Touch support for resize
+      handle.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        const touch = e.touches[0];
+        isResizing = true;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startWidth = el.offsetWidth;
+        startHeight = el.offsetHeight;
+        el.style.zIndex = 1000;
+        e.preventDefault();
+      });
+
+      document.addEventListener('touchmove', (e) => {
+        if (!isResizing) return;
+        const touch = e.touches[0];
+        let newWidth = startWidth + (touch.clientX - startX);
+        let newHeight = startHeight + (touch.clientY - startY);
+        newWidth = Math.max(40, newWidth);
+        newHeight = Math.max(40, newHeight);
+        el.style.width = newWidth + 'px';
+        el.style.height = newHeight + 'px';
+      });
+
+      document.addEventListener('touchend', () => {
+        isResizing = false;
+        el.style.zIndex = '';
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

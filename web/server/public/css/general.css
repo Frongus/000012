@@ -1,26 +1,78 @@
 :root {
-    --color-primary: #2A2827;
-    /* deep navy/charcoal */
-    --color-primary-text: #f5f5f5;
-    /* soft white text */
+    --color-primary: #0A0A0A;
+    --color-primary-text: #F5E3E0;
 
-    /* 30% - Secondary Color (Containers / Sections) */
-    --color-secondary: #2c2c3e;
-    /* slightly lighter section background */
-    --color-secondary-text: #e0e0e0;
-    /* light text for secondary elements */
+    --color-secondary: #DD00B5;
+    --color-secondary-text: #F5E3E0;
 
-    /* 10% - Accent Color (Purple) */
-    --color-accent: #9b5de5;
-    /* vibrant purple for buttons/links */
+    --color-accent: #D282A6;
     --color-accent-text: #ffffff;
 
-    /* Neutrals */
     --color-white: #ffffff;
     --color-black: #000000;
     --color-muted: #888888;
 }
 
+* {
+    color: var(--color-primary-text);
+    transition: all ease-in-out 0.3s;
+    font-family: "Open Sans", sans-serif;
+}
+
 body {
     background-color: var(--color-primary);
+    background-image: linear-gradient(135deg, #DD00B5, var(--color-primary));
+}
+
+.btnPrimary {
+    position: relative;
+    border: 1px solid var(--color-secondary);
+    border-radius: 10px;
+    background-color: var(--color-primary);
+    padding: 15px 30px;
+    overflow: hidden;
+    z-index: 1;
+    font-size: larger;
+    cursor: pointer;
+}
+
+.btnPrimary:hover {
+    transform: scale(1.03);
+}
+
+.btnPrimary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-secondary);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 0;
+}
+
+.btnPrimary:hover::before {
+    transform: translateX(0%);
+}
+
+.btnPrimary span {
+    position: relative;
+    z-index: 1;
+    color: var(--color-primary-text);
+    transition: color 0.3s ease-in-out;
+}
+
+.btnPrimary:hover span {
+    color: var(--color-accent-text);
+}
+
+.inputPrimary {
+    color: var(--color-primary-text);
+    font-size: larger;
+    border: 1px solid var(--color-secondary);
+    border-radius: 10px;
+    background-color: var(--color-primary);
+    padding: 15px 30px;
 }
