@@ -4,7 +4,8 @@ require('dotenv').config('.env');
 const port = process.env.PORT
 console.log(`Current Server Port: ` + process.env.PORT);
 
-server.get('/', require('./routes/pages.js'));
+server.use('/auth/', require('./routes/auth.js'));
+server.use('/', require('./routes/pages.js'));
 server.use(express.static('./public'));
 server.set('view engine', 'hbs');
 
