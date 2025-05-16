@@ -1,0 +1,27 @@
+#grid-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: 
+    "indexRow1 indexRow2 indexRow3";
+  gap: 16px;
+  width: 95%;
+}
+
+#indexRow1 {
+  grid-area: indexRow1;
+  background: #eee;
+}
+
+#indexRow2 {
+  grid-area: indexRow2;
+  background: #ddd;
+}
+
+#indexRow3 {
+  grid-area: indexRow3;
+  color: var(--color-secondary);
+}
