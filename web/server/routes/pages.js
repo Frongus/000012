@@ -7,6 +7,10 @@ router.get('/', function(req, res) {
 
 router.get('/demo/', (req, res) => {
     res.render('app.hbs');
-})
+});
+
+router.get('/policy/', (req, res) => {
+    res.render('policy.hbs');
+});
 
 module.exports = router

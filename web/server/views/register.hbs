@@ -15,9 +15,31 @@
 </head>
 
 <body>
-    <div id="registerForm">
-        <input class="inputPrimary" type="email" placeholder="E-Mail" id="email">
-        <button class="btnPrimary">Sign me Up</button>
+    <div id="grid-container">
+        <div id="indexRow1">
+            
+        </div>
+        <div id="indexRow2">
+            <h1 id="logo">Noted<img src="/media/pen_white.png" id="logoImg"></h1>
+            <h3>Try for free</h3>
+            <input class="inputPrimary" required id="indexEmailInput" type="email" placeholder="E-Mail">
+            <br>
+            <br>
+            <input class="inputPrimary" required id="indexNameInput" type="text" placeholder="Name">
+            <br>
+            <br>
+            <input class="inputPrimary" required id="indexPasswordInput" type="password" placeholder="Password">
+            <br>
+            <br>
+            <input class="inputPrimary" required id="indexPasswordRepeatInput" type="password" placeholder="Repeart Password">
+            <br>
+            <br>
+            <button onclick="indexRedirectRegister()" class="btnPrimary"><span>Sign Up</span></button>
+            <p>By continuing you accept our <a href="/policy/">policy</a></p>
+        </div>
+        <div id="indexRow3">
+            
+        </div>
     </div>
 </body>
 

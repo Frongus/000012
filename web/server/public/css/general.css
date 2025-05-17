@@ -19,9 +19,16 @@
     font-family: "Open Sans", sans-serif;
 }
 
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: var(--color-primary);
-    background-image: linear-gradient(145deg, #DD00B5, var(--color-primary));
+    background-image: linear-gradient(110deg, #DD00B5, var(--color-primary));
+    background-size: cover;
 }
 
 .btnPrimary {
