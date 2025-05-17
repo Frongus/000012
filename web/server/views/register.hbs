@@ -3,24 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/general.css">
-    <link rel="stylesheet" href="/css/login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/register.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
         rel="stylesheet">
-    <title>Login</title>
+    <title>Register</title>
 </head>
 
 <body>
-    <h1>Login</h1>
+    <div id="registerForm">
+        <input class="inputPrimary" type="email" placeholder="E-Mail" id="email">
+        <button class="btnPrimary">Sign me Up</button>
+    </div>
 </body>
 
 </html>
-<script>
-    function indexRedirectRegister() {
-        window.location.replace('/auth/register/');
-    }
-</script>
+<script src="/js/checkForEmail.js"></script>

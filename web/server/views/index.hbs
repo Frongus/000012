@@ -29,9 +29,21 @@
         </div>
         <div id="indexRow3">
             <h3>Try for free</h3>
-            <input class="inputPrimary" type="text" placeholder="E-Mail">
-            <button class="btnPrimary"><span>Sign Up</span></button>
+            <input class="inputPrimary" id="indexEmailInput" type="text" placeholder="E-Mail">
+            <button onclick="indexRedirectRegister()" class="btnPrimary"><span>Sign Up</span></button>
         </div>
     </div>
 </body>
 </html>
+<script>
+    const emailValue = document.getElementById('indexEmailInput')
+
+    function indexRedirectRegister() {
+        if(!emailValue.value) {
+            alert('Please enter an E-Mail Address');
+            return
+        }
+        window.localStorage.setItem('indexEmail', emailValue.value);
+        window.location.replace('/auth/register/');
+    }
+</script>

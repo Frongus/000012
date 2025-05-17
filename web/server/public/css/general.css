@@ -21,7 +21,7 @@
 
 body {
     background-color: var(--color-primary);
-    background-image: linear-gradient(135deg, #DD00B5, var(--color-primary));
+    background-image: linear-gradient(145deg, #DD00B5, var(--color-primary));
 }
 
 .btnPrimary {
@@ -34,6 +34,7 @@ body {
     z-index: 1;
     font-size: larger;
     cursor: pointer;
+    margin: 5px;
 }
 
 .btnPrimary:hover {

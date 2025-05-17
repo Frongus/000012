@@ -5,8 +5,7 @@
   transform: translate(-50%, -50%);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-    "indexRow1 indexRow2 indexRow3";
+  grid-template-areas: "indexRow1 indexRow2 indexRow3";
   gap: 20px;
   width: 95%;
 }
@@ -16,6 +15,7 @@
   text-align: center;
   grid-area: indexRow1;
   border: 1px solid var(--color-accent);
+  opacity: .88;
 }
 
 #indexRow2 {
@@ -28,6 +28,7 @@
   align-items: center;
   text-align: center;
   grid-area: indexRow3;
+  opacity: .88;
 }
 
 #logo {
@@ -41,4 +42,14 @@
 #indexInfoText {
   font-size: 20px;
   font-weight: lighter;
+}
+
+@media (max-width: 800px) {
+  #grid-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "indexRow1"
+      "indexRow2"
+      "indexRow3";
+  }
 }
