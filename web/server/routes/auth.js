@@ -9,4 +9,8 @@ router.get('/register/', function(req, res) {
  res.render('register.hbs');
 });
 
+router.post('/register/data/', (req, res) => {
+    console.log(req.body)
+})
+
 module.exports = router;

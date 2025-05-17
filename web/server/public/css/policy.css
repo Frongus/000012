@@ -18,6 +18,10 @@ body {
     padding-bottom: 50px;
 }
 
+#policyText p {
+    opacity: .88;
+}
+
 #policyTitle {
     text-align: center;
 }

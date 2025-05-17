@@ -21,7 +21,7 @@
         </div>
         <div id="indexRow2">
             <h1 id="logo">Noted<img src="/media/pen_white.png" id="logoImg"></h1>
-            <h3>Try for free</h3>
+            <h3>Register for free</h3>
             <input class="inputPrimary" required id="indexEmailInput" type="email" placeholder="E-Mail">
             <br>
             <br>
@@ -34,8 +34,9 @@
             <input class="inputPrimary" required id="indexPasswordRepeatInput" type="password" placeholder="Repeart Password">
             <br>
             <br>
-            <button onclick="indexRedirectRegister()" class="btnPrimary"><span>Sign Up</span></button>
-            <p>By continuing you accept our <a href="/policy/">policy</a></p>
+            <button onclick="testFormInformation()" class="btnPrimary"><span>Sign Up</span></button>
+            <p id="alertNotice"></p>
+            <p id="registerPolicyInformation">By continuing you accept our <a href="/policy/">policy</a></p>
         </div>
         <div id="indexRow3">
             
@@ -45,3 +46,4 @@
 
 </html>
 <script src="/js/checkForEmail.js"></script>
+<script src="/js/register.js"></script>

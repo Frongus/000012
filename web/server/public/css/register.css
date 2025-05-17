@@ -43,6 +43,10 @@
   font-weight: lighter;
 }
 
+#registerPolicyInformation {
+  opacity: .75;
+}
+
 @media (max-width: 800px) {
   #grid-container {
     grid-template-columns: 1fr;
