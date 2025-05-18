@@ -3,24 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/general.css">
-    <link rel="stylesheet" href="/css/login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/register.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
         rel="stylesheet">
-    <title>Login</title>
+    <title>Welcome back</title>
 </head>
 
 <body>
-    <h1>Login</h1>
+    <div id="grid-container">
+        <div id="indexRow1">
+            
+        </div>
+        <div id="indexRow2">
+            <h1 id="logo">Noted<img src="/media/pen_white.png" id="logoImg"></h1>
+            <h3>Welcome back!</h3>
+            <input class="inputPrimary" required id="indexUsernameInput" type="text" placeholder="Username">
+            <br>
+            <br>
+            <input class="inputPrimary" required id="indexPasswordInput" type="password" placeholder="Password">
+            <br>
+            <br>
+            <button onclick="sendToBackend()" class="btnPrimary"><span>Sign In</span></button>
+            <p id="alertNotice"></p>
+        </div>
+        <div id="indexRow3">
+            
+        </div>
+    </div>
 </body>
 
 </html>
-<script>
-    function indexRedirectRegister() {
-        window.location.replace('/auth/register/');
-    }
-</script>
+<script src="/js/checkForEmail.js"></script>
+<script src="/js/login.js"></script>

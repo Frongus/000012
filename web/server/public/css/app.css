@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    background-color: var(--color-primary);
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image: linear-gradient(110deg, var(--color-primary), var(--color-primary));
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+#toolbar {
+    padding: 10px;
+    border-bottom: 1px solid var(--color-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#canvasWrapper {
+    flex: 1;
+    text-align: right;
+    position: relative;
+    overflow: auto;
+    background: var(--color-primary);
+}
+
+canvas {
+    border-left: 1px solid var(--color-secondary);
+    touch-action: none;
+    text-align: right;
+    background: var(--color-primary);
+    cursor: crosshair;
+    position: relative;
+}
+
+.floating-textbox,
+.floating-table {
+    transition: none;
+    position: absolute;
+    border: 1px solid var(--color-secondary);
+    background: var(--color-primary);
+    resize: both;
+    overflow: auto;
+    cursor: move;
+    padding: 5px;
+    color: var(--color-primary-text);
+}
+
+.floating-textbox textarea {
+    background-color: var(--color-primary);
+    border: none;
+    transition: none;
+}
+
+.floating-textbox button {
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-secondary);
+    border-radius: 2px;
+}
+
+.floating-table table {
+    border-collapse: collapse;
+    transition: none;
+}
+
+.floating-table td,
+.floating-table th {
+    border: 1px solid var(--color-secondary);
+    padding: 4px;
+    transition: none;
+}
+
+#canvasWrapper {
+    overflow-y: auto;
+}
+
+.inputSecondary {
+    margin-top: 11px;
+}
+
+.floating-image,
+.floating-pdf {
+    border: 1px solid var(--color-secondary);
+    resize: both;
+    overflow: auto;
+    padding: 2px;
+    z-index: 1;
+    transition: none;
+    background-color: var(--color-primary);
+    transition: none;
+}
+
+.floating-image button,
+.floating-pdf button {
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-secondary);
+    border-radius: 2px;
+}

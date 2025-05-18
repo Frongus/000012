@@ -1,0 +1,58 @@
+#grid-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "indexRow1 indexRow2 indexRow3";
+  gap: 20px;
+  width: 95%;
+}
+
+#indexRow1 {
+  align-items: center;
+  text-align: center;
+  grid-area: indexRow1;
+  opacity: .88;
+}
+
+#indexRow2 {
+  align-items: center;
+  text-align: center;
+  grid-area: indexRow2;
+}
+
+#indexRow3 {
+  align-items: center;
+  text-align: center;
+  grid-area: indexRow3;
+  opacity: .88;
+}
+
+#logo {
+  font-size: 50px;
+}
+
+#logoImg {
+  transform: scale(0.9);
+}
+
+#indexInfoText {
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+#registerPolicyInformation {
+  opacity: .75;
+}
+
+@media (max-width: 800px) {
+  #grid-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "indexRow1"
+      "indexRow2"
+      "indexRow3";
+  }
+}

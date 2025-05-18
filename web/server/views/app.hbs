@@ -1,299 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Drawing App with Tools</title>
-
-  <!-- External Libraries -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noted! Workbench</title>
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    #toolbar {
-      padding: 10px;
-      background: #f0f0f0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    #canvasWrapper {
-      flex: 1;
-      position: relative;
-      overflow: auto;
-      background: #fff;
-    }
-
-    canvas {
-      border: 1px solid #000;
-      touch-action: none;
-      background: white;
-      cursor: crosshair;
-    }
-
-    .floating-textbox, .floating-table {
-      position: absolute;
-      border: 1px solid #999;
-      background: white;
-      resize: both;
-      overflow: auto;
-      cursor: move;
-      padding: 5px;
-    }
-
-    .floating-table table {
-      border-collapse: collapse;
-    }
-
-    .floating-table td, .floating-table th {
-      border: 1px solid #ccc;
-      padding: 4px;
-    }
-  </style>
 </head>
+
 <body>
 
-  <div id="toolbar">
-    <label>Color: <input type="color" id="colorPicker" value="#000000" /></label>
-    <label>Brush Size: <input type="range" id="brushSize" min="1" max="20" value="2"/></label>
-    <button onclick="addTextbox()">Add Textbox</button>
-    <button onclick="addTable()">Add Table</button>
-    <input type="file" id="imageInput" accept="image/*" />
-    <input type="file" id="pdfInput" accept="application/pdf" />
-    <button onclick="clearCanvas()">Clear</button>
-    <button onclick="exportAsPDF()">Export as PDF</button>
-    <button onclick="exportAsProject()">Export as File</button>
-    <input type="file" id="importFile" accept=".json" onchange="importProject()" />
+  <div id="toolbar" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    <!-- Drawing Tools -->
+    <div class="toolbar-group" title="Drawing Tools">
+      <label title="Pick Color">
+        <i class="fas fa-palette"></i>
+        <input type="color" id="colorPicker" value="#ffffff" />
+      </label>
+      <label title="Brush Size">
+        <i class="fas fa-paint-brush"></i>
+        <input type="range" id="brushSize" min="1" max="20" value="2" />
+      </label>
+      <button class="btnSecondary" id="eraserBtn" title="Add Textbox">
+        <i class="fa-solid fa-eraser"></i>/<i class="fas fa-paint-brush"></i>
+      </button>
+    </div>
+
+    <!-- Add Elements -->
+    <div class="toolbar-group" title="Insert Elements">
+      <button class="btnSecondary" onclick="addTextbox()" title="Add Textbox">
+        <i class="fas fa-font"></i>
+      </button>
+      <button class="btnSecondary" onclick="addTable()" title="Add Table">
+        <i class="fas fa-table"></i>
+      </button>
+    </div>
+
+    <!-- Media Input -->
+    <div class="toolbar-group" title="Insert Media">
+      <label title="Upload Image">
+        <i class="fas fa-image inputSecondary"></i>
+        <input class="inputSecondary" type="file" id="imageInput" accept="image/*" style="display: none;" />
+      </label>
+      <label title="Upload PDF">
+        <i class="fas fa-file-pdf inputSecondary"></i>
+        <input class="inputSecondary" type="file" id="pdfInput" accept="application/pdf" style="display: none;" />
+      </label>
+      <label title="Import Project File">
+        <i class="fas fa-upload inputSecondary"></i>
+        <input class="inputSecondary" type="file" id="importFile" accept=".json" onchange="importProject()"
+          style="display: none;" />
+      </label>
+    </div>
+
+    <!-- Project Control -->
+    <div class="toolbar-group" title="Project Tools">
+      <button class="btnSecondary" onclick="clearCanvas()" title="Clear Canvas">
+        <i class="fas fa-eraser"></i>
+      </button>
+      <button class="btnSecondary" onclick="exportAsPDF()" title="Export as PDF">
+        <i class="fas fa-file-export"></i>
+      </button>
+      <button class="btnSecondary" onclick="exportAsProject()" title="Export Project File">
+        <i class="fas fa-download"></i>
+      </button>
+      <button class="btnSecondary" onclick="undo()" title="Undo">
+        <i class="fa-solid fa-arrow-rotate-left"></i>
+      </button>
+    </div>
   </div>
+
 
   <div id="canvasWrapper">
-    <canvas id="drawingCanvas" width="1200" height="800"></canvas>
+    <canvas id="drawingCanvas" width="1500" height="1600"></canvas>
   </div>
 
-  <script>
-    const canvas = document.getElementById('drawingCanvas');
-    const ctx = canvas.getContext('2d');
-    const colorPicker = document.getElementById('colorPicker');
-    const brushSize = document.getElementById('brushSize');
-    let drawing = false;
-
-    function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        pressure: e.pressure || 0.5
-      };
-    }
-
-    function startDraw(e) {
-      if (e.pointerType === 'mouse' || e.pointerType === 'pen' || e.pointerType === 'touch') {
-        drawing = true;
-        const pos = getPos(e);
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
-        e.preventDefault();
-      }
-    }
-
-    function draw(e) {
-      if (!drawing) return;
-      const pos = getPos(e);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.strokeStyle = colorPicker.value;
-      ctx.lineWidth = brushSize.value * (e.pressure || 1);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.stroke();
-      e.preventDefault();
-    }
-
-    function stopDraw(e) {
-      if (drawing) {
-        ctx.closePath();
-        drawing = false;
-        e.preventDefault();
-      }
-    }
-
-    canvas.addEventListener('pointerdown', startDraw);
-    canvas.addEventListener('pointermove', draw);
-    canvas.addEventListener('pointerup', stopDraw);
-    canvas.addEventListener('pointerout', stopDraw);
-
-    function makeMovable(el) {
-      let offsetX = 0, offsetY = 0, isDown = false;
-
-      el.addEventListener('mousedown', (e) => {
-        if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'TD' || e.target.tagName === 'TH') return;
-        isDown = true;
-        offsetX = e.offsetX;
-        offsetY = e.offsetY;
-        el.style.zIndex = 1000;
-        e.preventDefault();
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        el.style.left = `${e.pageX - offsetX}px`;
-        el.style.top = `${e.pageY - offsetY}px`;
-      });
-
-      document.addEventListener('mouseup', () => {
-        isDown = false;
-        el.style.zIndex = '';
-      });
-    }
-
-    function addTextbox() {
-      const textbox = document.createElement('textarea');
-      textbox.className = 'floating-textbox';
-      textbox.style.left = '100px';
-      textbox.style.top = '100px';
-      textbox.rows = 4;
-      textbox.cols = 20;
-      makeMovable(textbox);
-      document.getElementById('canvasWrapper').appendChild(textbox);
-    }
-
-    function addTable() {
-      const container = document.createElement('div');
-      container.className = 'floating-table';
-      container.style.left = '200px';
-      container.style.top = '200px';
-      container.innerHTML = `
-        <table contenteditable="true">
-          <tr><th>Header 1</th><th>Header 2</th></tr>
-          <tr><td>Data 1</td><td>Data 2</td></tr>
-        </table>`;
-      makeMovable(container);
-      document.getElementById('canvasWrapper').appendChild(container);
-    }
-
-    document.getElementById('imageInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const img = new Image();
-      img.onload = () => {
-        ctx.drawImage(img, 50, 50, img.width / 2, img.height / 2);
-      };
-      img.src = URL.createObjectURL(file);
-    });
-
-    document.getElementById('pdfInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function() {
-        const typedarray = new Uint8Array(reader.result);
-        pdfjsLib.getDocument(typedarray).promise.then(pdf => {
-          pdf.getPage(1).then(page => {
-            const scale = 1.5;
-            const viewport = page.getViewport({ scale });
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = viewport.width;
-            tempCanvas.height = viewport.height;
-            const tempCtx = tempCanvas.getContext('2d');
-
-            page.render({ canvasContext: tempCtx, viewport }).promise.then(() => {
-              ctx.drawImage(tempCanvas, 50, 50);
-            });
-          });
-        });
-      };
-      reader.readAsArrayBuffer(file);
-    });
-
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    async function exportAsPDF() {
-      const wrapper = document.getElementById('canvasWrapper');
-      const canvasImage = await html2canvas(wrapper);
-      const imgData = canvasImage.toDataURL('image/png');
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'px',
-        format: [canvasImage.width, canvasImage.height]
-      });
-      pdf.addImage(imgData, 'PNG', 0, 0, canvasImage.width, canvasImage.height);
-      pdf.save('drawing.pdf');
-    }
-
-    function exportAsProject() {
-      const elements = [];
-      const wrapper = document.getElementById('canvasWrapper');
-      wrapper.querySelectorAll('.floating-textbox, .floating-table').forEach(el => {
-        elements.push({
-          type: el.className,
-          html: el.outerHTML,
-          left: el.style.left,
-          top: el.style.top,
-          width: el.style.width,
-          height: el.style.height
-        });
-      });
-
-      const drawingData = canvas.toDataURL('image/png');
-
-      const project = {
-        drawing: drawingData,
-        elements
-      };
-
-      const blob = new Blob([JSON.stringify(project)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'drawing_project.json';
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importProject() {
-      const input = document.getElementById('importFile');
-      const file = input.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const data = JSON.parse(e.target.result);
-
-        const img = new Image();
-        img.onload = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0);
-        };
-        img.src = data.drawing;
-
-        document.querySelectorAll('.floating-textbox, .floating-table').forEach(el => el.remove());
-
-        data.elements.forEach(item => {
-          const template = document.createElement('template');
-          template.innerHTML = item.html.trim();
-          const newEl = template.content.firstChild;
-          newEl.style.left = item.left;
-          newEl.style.top = item.top;
-          newEl.style.width = item.width;
-          newEl.style.height = item.height;
-          makeMovable(newEl);
-          document.getElementById('canvasWrapper').appendChild(newEl);
-        });
-      };
-      reader.readAsText(file);
-    }
-  </script>
+  <script src="/js/app.js"></script>
 </body>
+
 </html>

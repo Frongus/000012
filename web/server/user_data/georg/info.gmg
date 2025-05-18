@@ -1,0 +1,8 @@
+{
+    "username": "georg",
+    "email": "test@test.de",
+    "name": "georg",
+    "passwordHash": "$2b$10$nUNysv.UWgBYYJTjGxL3qOcTVS3Dn6Pv/XcV.5tw4OFru9zdUjd3O",
+    "createdAt": "2025-05-18T15:00:36.064Z",
+    "hasPaid": false
+}

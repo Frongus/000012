@@ -4,6 +4,7 @@ const email = document.getElementById('indexEmailInput');
 const name = document.getElementById('indexNameInput');
 const password = document.getElementById('indexPasswordInput');
 const repeatedPassword = document.getElementById('indexPasswordRepeatInput');
+const username = document.getElementById('indexUsernameInput');
 const alertNotice = document.getElementById('alertNotice');
 
 function testFormInformation() {
@@ -11,6 +12,7 @@ function testFormInformation() {
     const nameDataStr = name.value.trim();
     const passwordDataStr = password.value;
     const repeatedPasswordDataStr = repeatedPassword.value;
+    const usernameStr = username.value.trim();
 
     // Email format check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,11 +45,18 @@ function testFormInformation() {
         return false;
     }
 
+    const usernameRegex = /^[a-zA-Z0-9_-]{3,20}$/;
+    if (!usernameRegex.test(usernameStr)) {
+        console.error("Invalid name. Only letters and spaces are allowed.");
+        alertNotice.innerHTML = "Username should contain only letters."
+        return false;
+    }
+
     console.log("All inputs are valid!");
-    sendToBackend(emailDataStr, nameDataStr, passwordDataStr);
+    sendToBackend(emailDataStr, nameDataStr, passwordDataStr, usernameStr);
 }
 
-function sendToBackend(email, name, password) {
+function sendToBackend(email, name, password, username) {
     fetch('/auth/register/data/', {
         method: "POST",
         headers: {
@@ -56,7 +65,15 @@ function sendToBackend(email, name, password) {
         body: JSON.stringify({
             "nameStr": name,
             "emailStr": email,
-            "passwordStr": password
+            "passwordStr": password,
+            "usernameStr": username
         })
+    }).then(response => response.json()).then((data) => {
+        console.log(data);
+        if(data.res === "UserAlreadyExists") {
+            alertNotice.innerHTML = "Username already in use."
+        } else {
+            window.location.replace('/auth/login/');
+        }
     })
 }
