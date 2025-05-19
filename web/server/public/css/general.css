@@ -117,3 +117,25 @@ body {
     background-color: var(--color-secondary);
     cursor: pointer;
 }
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer ul {
+    text-align: center;
+}
+
+.footer ul li {
+    text-align: center;
+    display: inline;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.footer ul li a {
+    text-decoration: none;
+    opacity: .75;
+}

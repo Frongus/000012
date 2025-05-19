@@ -110,3 +110,29 @@ canvas {
     border: 1px solid var(--color-secondary);
     border-radius: 2px;
 }
+
+.page {
+  position: relative;
+  width: 1500px;        
+  height: 1600px;        
+  margin: 40px auto;  
+  border: 1px solid var(--color-secondary);
+  background: var(--color-primary);
+  overflow: hidden;
+}
+
+.zoomable {
+  touch-action: none;     
+}
+
+
+.table-toolbar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.table-toolbar button {
+  font-size: 0.8rem;
+  padding: 2px 4px;
+}

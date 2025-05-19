@@ -11,8 +11,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 
@@ -79,11 +77,20 @@
   </div>
 
 
-  <div id="canvasWrapper">
-    <canvas id="drawingCanvas" width="1500" height="1600"></canvas>
+    <div class="page zoomable" id="page-1">
+    <div id="canvasWrapper-1" class="canvasWrapper">
+      <canvas id="drawingCanvas-1" width="1500" height="1600"></canvas>
+    </div>
+    <button class="addPageBtn btnPrimary">＋ New Page</button>
   </div>
 
-  <script src="/js/app.js"></script>
+
+  <script src="/js/app/canvas-core.js"></script>
+  <script src="/js/app/elementManager.js"></script>
+  <script src="/js/app/canvas-utilities.js"></script>
+  <script src="/js/app/project-export.js"></script>
+  <script src="/js/app/main.js"></script>
+  <script src="/js/app/pages.js"></script>
 </body>
 
 </html>
