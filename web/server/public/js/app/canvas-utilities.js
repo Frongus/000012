@@ -4,7 +4,8 @@ function clearCanvas() {
   }
 }
 
-function extendCanvas(extraHeight = 800) {
+function extendCanvas(canvas, extraHeight = 800) {
+  const ctx = canvas.getContext('2d');
   const tempCanvas = document.createElement('canvas');
   tempCanvas.width = canvas.width;
   tempCanvas.height = canvas.height;
@@ -14,3 +15,4 @@ function extendCanvas(extraHeight = 800) {
   canvas.height += extraHeight;
   ctx.drawImage(tempCanvas, 0, 0);
 }
+

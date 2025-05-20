@@ -1,27 +1,33 @@
-let tool = 'pen';
+window.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('drawingCanvas');
+  if (canvas) initializeCanvas(canvas); // from canvas-core.js
 
-canvas.addEventListener('pointerdown', startDraw);
-canvas.addEventListener('pointermove', draw);
-canvas.addEventListener('pointerup', stopDraw);
-canvas.addEventListener('pointerout', stopDraw);
+  document.getElementById('eraserBtn').addEventListener('click', () => {
+    tool = (tool === 'eraser') ? 'pen' : 'eraser';
+  });
 
-document.getElementById('eraserBtn').addEventListener('click', () => {
-  tool = (tool === 'eraser') ? 'pen' : 'eraser';
+  document.getElementById('canvasWrapper').addEventListener('scroll', () => {
+    const scrollY = canvasWrapper.scrollTop;
+    const viewportHeight = canvasWrapper.clientHeight;
+    const fullHeight = canvasWrapper.scrollHeight;
+    if (scrollY + viewportHeight >= fullHeight - 100) {
+      // If you want to use extendCanvas, pass in the current canvas!
+      const canvases = document.querySelectorAll('.pageCanvas');
+      const lastCanvas = canvases[canvases.length - 1];
+      extendCanvas(lastCanvas);
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+      const canvases = document.querySelectorAll('.pageCanvas');
+      const lastCanvas = canvases[canvases.length - 1];
+      undo(lastCanvas);
+    }
+  });
 });
 
-if (undoStack.length > 50) undoStack.shift();
-
-document.getElementById('canvasWrapper').addEventListener('scroll', () => {
-  const scrollY = canvasWrapper.scrollTop;
-  const viewportHeight = canvasWrapper.clientHeight;
-  const fullHeight = canvasWrapper.scrollHeight;
-  if (scrollY + viewportHeight >= fullHeight - 100) {
-    extendCanvas();
-  }
-});
-
-window.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
-    undo();
-  }
-});
+function getCurrentCanvas() {
+    const canvases = document.querySelectorAll('.pageCanvas');
+    return canvases[canvases.length - 1]; // or whichever is considered "active"
+}

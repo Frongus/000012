@@ -70,27 +70,35 @@
       <button class="btnSecondary" onclick="exportAsProject()" title="Export Project File">
         <i class="fas fa-download"></i>
       </button>
-      <button class="btnSecondary" onclick="undo()" title="Undo">
+      <button class="btnSecondary" onclick="undo(getCurrentCanvas())" title="Undo">
         <i class="fa-solid fa-arrow-rotate-left"></i>
       </button>
     </div>
   </div>
 
 
-    <div class="page zoomable" id="page-1">
-    <div id="canvasWrapper-1" class="canvasWrapper">
-      <canvas id="drawingCanvas-1" width="1500" height="1600"></canvas>
+  <div class="page zoomable" id="page-1">
+    <div id="canvasWrapper" class="canvasWrapper">
+      <canvas id="drawingCanvas" width="1240" height="1754"></canvas>
     </div>
-    <button class="addPageBtn btnPrimary">＋ New Page</button>
+    <div id="btnContainer">
+      <button onclick="addNewPage()" class="addPageBtn btnPrimary">＋ New Page</button>
+    </div>
   </div>
 
+  <script>
+    window.onload = () => {
+      const firstCanvas = document.getElementById('drawingCanvas');
+      initializeCanvas(firstCanvas);
+    };
+  </script>
 
   <script src="/js/app/canvas-core.js"></script>
   <script src="/js/app/elementManager.js"></script>
   <script src="/js/app/canvas-utilities.js"></script>
   <script src="/js/app/project-export.js"></script>
-  <script src="/js/app/main.js"></script>
   <script src="/js/app/pages.js"></script>
+  <script src="/js/app/main.js"></script>
 </body>
 
 </html>

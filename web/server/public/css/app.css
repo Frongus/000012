@@ -12,12 +12,6 @@ html,
 body {
     margin: 0;
     padding: 0;
-    overflow-y: scroll;
-}
-
-html,
-body {
-    overflow: hidden;
 }
 
 #toolbar {
@@ -28,18 +22,27 @@ body {
     gap: 10px;
 }
 
+#toolbar {
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+    width: 100%;
+    background-color: rgba(10, 10, 10, 0.88);
+}
+
 #canvasWrapper {
+    width: 100%;
     flex: 1;
-    text-align: right;
+    text-align: center;
     position: relative;
-    overflow: auto;
     background: var(--color-primary);
 }
 
 canvas {
     border-left: 1px solid var(--color-secondary);
+    border: 1px solid var(--color-secondary);
     touch-action: none;
-    text-align: right;
+    text-align: center;
     background: var(--color-primary);
     cursor: crosshair;
     position: relative;
@@ -83,10 +86,6 @@ canvas {
     transition: none;
 }
 
-#canvasWrapper {
-    overflow-y: auto;
-}
-
 .inputSecondary {
     margin-top: 11px;
 }
@@ -112,27 +111,45 @@ canvas {
 }
 
 .page {
-  position: relative;
-  width: 1500px;        
-  height: 1600px;        
-  margin: 40px auto;  
-  border: 1px solid var(--color-secondary);
-  background: var(--color-primary);
-  overflow: hidden;
+    top: 20%;
+    position: relative;
+    width: 100%;
+    height: 80%;
+    background: var(--color-primary);
 }
 
 .zoomable {
-  touch-action: none;     
+    touch-action: none;
 }
 
 
 .table-toolbar {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 4px;
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
 }
 
 .table-toolbar button {
-  font-size: 0.8rem;
-  padding: 2px 4px;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-secondary);
+    border-radius: 2px;
+}
+
+#btnContainer {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+}
+
+.pageCanvas {
+    border: 1px solid var(--color-secondary);
+    touch-action: none;
+    text-align: center;
+    background: var(--color-primary);
+    cursor: crosshair;
+    position: relative;
 }
