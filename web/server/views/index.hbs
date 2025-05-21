@@ -29,8 +29,10 @@
         </div>
         <div id="indexRow3">
             <h3>Try for free</h3>
-            <input class="inputPrimary" id="indexEmailInput" type="text" placeholder="E-Mail">
-            <button onclick="indexRedirectRegister()" class="btnPrimary"><span>Sign Up</span></button>
+            <div id="indexProceedBtn">
+                <input id="indexEmailInput" type="text" placeholder="E-Mail">
+                <button onclick="indexRedirectRegister()"><span>Sign Up</span></button>
+            </div>
             <p><a href="/auth/login/">or Sign In</a></p>
         </div>
     </div>
@@ -39,16 +41,16 @@
             <li><a href="/about/">About Us</a></li>
             <li><a href="/policy/">Policy</a></li>
             <li><a href="/contact/">Contact</a></li>
-            <li><a href="/">Remove my data</a></li>
         </ul>
     </div>
 </body>
+
 </html>
 <script>
     const emailValue = document.getElementById('indexEmailInput')
 
     function indexRedirectRegister() {
-        if(!emailValue.value) {
+        if (!emailValue.value) {
             alert('Please enter an E-Mail Address');
             return
         }

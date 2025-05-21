@@ -1,3 +1,5 @@
+let canvas = document.querySelectorAll('canvas');
+
 window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('drawingCanvas');
   if (canvas) initializeCanvas(canvas); // from canvas-core.js
@@ -31,3 +33,11 @@ function getCurrentCanvas() {
     const canvases = document.querySelectorAll('.pageCanvas');
     return canvases[canvases.length - 1]; // or whichever is considered "active"
 }
+
+document.getElementById('undoBtn').addEventListener('click', () => {
+    undo(activeCanvas);
+});
+
+document.getElementById('redoBtn').addEventListener('click', () => {
+    redo(activeCanvas);
+});

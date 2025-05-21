@@ -139,3 +139,35 @@ body {
     text-decoration: none;
     opacity: .75;
 }
+
+@media (max-width: 800px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* center the <ul> horizontally */
+    padding: 10px 0;
+    z-index: 1000;
+  }
+
+  .footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* inline items */
+    gap: 10px; /* spacing between links */
+  }
+
+  .footer li {
+    display: inline; /* not strictly necessary with flex, but harmless */
+  }
+
+  .footer a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 14px;
+  }
+}

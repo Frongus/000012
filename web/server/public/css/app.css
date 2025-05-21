@@ -36,6 +36,10 @@ body {
     text-align: center;
     position: relative;
     background: var(--color-primary);
+    transform-origin: 0 0;
+    touch-action: none;
+    overflow: scroll;
+    transition: none;
 }
 
 canvas {
@@ -43,7 +47,7 @@ canvas {
     border: 1px solid var(--color-secondary);
     touch-action: none;
     text-align: center;
-    background: var(--color-primary);
+    background: var(--color-white);
     cursor: crosshair;
     position: relative;
 }
@@ -84,6 +88,13 @@ canvas {
     border: 1px solid var(--color-secondary);
     padding: 4px;
     transition: none;
+}
+
+.floating-table button {
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-secondary);
+    margin-bottom: 5px;
+    border-radius: 2px;
 }
 
 .inputSecondary {
@@ -152,4 +163,12 @@ canvas {
     background: var(--color-primary);
     cursor: crosshair;
     position: relative;
+}
+
+#canvasWrapper {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+#canvasWrapper::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
 }
