@@ -18,7 +18,7 @@ function sendToBackend() {
         console.log(data);
         alertNotice.innerHTML = data.res;
         if(data.res.name) {
-            window.location.replace('/app/workbench/')
+            window.location.replace('/chat/')
         }
     })
 }

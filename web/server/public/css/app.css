@@ -17,9 +17,6 @@ body {
 #toolbar {
     padding: 10px;
     border-bottom: 1px solid var(--color-secondary);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
 }
 
 #toolbar {
@@ -37,7 +34,7 @@ body {
     position: relative;
     background: var(--color-primary);
     transform-origin: 0 0;
-    touch-action: none;
+    touch-action: pinch-zoom;
     overflow: scroll;
     transition: none;
 }
@@ -45,7 +42,7 @@ body {
 canvas {
     border-left: 1px solid var(--color-secondary);
     border: 1px solid var(--color-secondary);
-    touch-action: none;
+    touch-action: pinch-zoom;
     text-align: center;
     background: var(--color-white);
     cursor: crosshair;
@@ -130,7 +127,7 @@ canvas {
 }
 
 .zoomable {
-    touch-action: none;
+    touch-action: pinch-zoom;
 }
 
 
@@ -158,17 +155,57 @@ canvas {
 
 .pageCanvas {
     border: 1px solid var(--color-secondary);
-    touch-action: none;
+    touch-action: pinch-zoom;
     text-align: center;
     background: var(--color-primary);
     cursor: crosshair;
     position: relative;
 }
 
-#canvasWrapper {
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+#toolbar {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  align-items: center;
 }
-#canvasWrapper::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+
+#toolbar ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+#toolbar ul li {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1000px) {
+  #toolbar {
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #toolbar ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #toolbarToggle {
+    display: contents;
+  }
+
+  #toolbar.active ul {
+    display: flex;
+  }
+
+  #toolbar ul li {
+    padding: 0.5rem 0;
+  }
 }

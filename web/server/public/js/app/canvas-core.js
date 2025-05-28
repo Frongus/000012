@@ -5,7 +5,10 @@ const canvasData = new WeakMap(); // Store state per canvas
 const colorPicker = document.getElementById('colorPicker');
 const brushSize = document.getElementById('brushSize');
 
-// Global pinch-zoom tracking
+canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+canvas.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+
 window.isZooming = false;
 let ongoingTouches = [];
 

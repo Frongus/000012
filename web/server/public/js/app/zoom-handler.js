@@ -1,85 +1,58 @@
-let scale = 1;
-let lastDistance = null;
-let isPanning = false;
-let lastTouchMid = null;
-let isZooming = false; // 🆕 Add this flag
+(function () {
+  window.zoomState = {
+    scale: 1,
+    translateX: 0,
+    translateY: 0,
+    lastDistance: null,
+    lastTouchMid: null,
+    isZooming: false,
+  };
 
-const wrapper = document.getElementById('canvasWrapper');
-
-wrapper.addEventListener('touchstart', (e) => {
-  if (e.touches.length === 2) {
-    isZooming = true;
-    const dist = getTouchDistance(e.touches);
-    lastDistance = dist;
-    lastTouchMid = getTouchMidpoint(e.touches);
-    isPanning = true;
+  function getTouchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
   }
-}, { passive: false });
 
-wrapper.addEventListener('touchmove', (e) => {
-  if (e.touches.length === 2 && isPanning) {
-    e.preventDefault();
-    const newDist = getTouchDistance(e.touches);
-    const midpoint = getTouchMidpoint(e.touches);
-
-    const deltaScale = newDist / lastDistance;
-    scale *= deltaScale;
-    scale = Math.max(0.5, Math.min(scale, 5));
-
-    wrapper.style.transform = `scale(${scale})`;
-
-    lastDistance = newDist;
-    lastTouchMid = midpoint;
+  function getTouchMidpoint(touches) {
+    return {
+      x: (touches[0].clientX + touches[1].clientX) / 2,
+      y: (touches[0].clientY + touches[1].clientY) / 2,
+    };
   }
-}, { passive: false });
 
-wrapper.addEventListener('touchend', (e) => {
-  if (e.touches.length < 2) {
-    lastDistance = null;
-    isPanning = false;
-    isZooming = false; // 🆕 Reset flag when done
-  }
-});
+  window.handleZoomTouchStart = function (e) {
+    if (e.touches.length === 2) {
+      zoomState.isZooming = true;
+      zoomState.lastDistance = getTouchDistance(e.touches);
+      zoomState.lastTouchMid = getTouchMidpoint(e.touches);
+    }
+  };
 
+  window.handleZoomTouchMove = function (e, redrawCallback) {
+    if (e.touches.length === 2 && zoomState.isZooming) {
+      e.preventDefault();
 
-let translateX = 0;
-let translateY = 0;
+      const newDistance = getTouchDistance(e.touches);
+      const newMid = getTouchMidpoint(e.touches);
+      const deltaScale = newDistance / zoomState.lastDistance;
 
-const container = canvas.parentElement || document.body;
+      zoomState.scale *= deltaScale;
+      zoomState.scale = Math.max(0.5, Math.min(zoomState.scale, 5)); // clamp
 
-function applyTransform(ctx) {
-  ctx.setTransform(scale, 0, 0, scale, translateX, translateY);
-}
+      zoomState.translateX += newMid.x - zoomState.lastTouchMid.x;
+      zoomState.translateY += newMid.y - zoomState.lastTouchMid.y;
 
-function redrawCanvas() {
-  const ctx = canvas.getContext('2d');
-  // Clear before redraw
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+      zoomState.lastDistance = newDistance;
+      zoomState.lastTouchMid = newMid;
 
-  // Apply current zoom/pan
-  applyTransform(ctx);
+      if (typeof redrawCallback === 'function') redrawCallback();
+    }
+  };
 
-  // TODO: redraw your canvas content here
-  // e.g. redraw your paths, images, etc.
-
-  // Since you use getImageData for undo, 
-  // you might want to store the current drawing in a backing store and redraw here
-}
-
-function autoZoomOut() {
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
-
-  const scaleX = containerWidth / canvas.width;
-  const scaleY = containerHeight / canvas.height;
-
-  // Use the smaller scale to fit entire canvas
-  scale = Math.min(scaleX, scaleY);
-
-  // Center the canvas in the container
-  translateX = (containerWidth - canvas.width * scale) / 2;
-  translateY = (containerHeight - canvas.height * scale) / 2;
-
-  // Redraw with new transform
-  redrawCanvas();
-}
+  window.handleZoomTouchEnd = function () {
+    zoomState.isZooming = false;
+    zoomState.lastDistance = null;
+    zoomState.lastTouchMid = null;
+  };
+})();

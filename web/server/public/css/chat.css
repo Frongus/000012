@@ -1,0 +1,136 @@
+#mainContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 10px;
+    height: 80%;
+    border: 1px solid var(--color-secondary);
+}
+
+#pfp {
+    border-radius: 360%;
+    transform: scale(0.5);
+    transform: translateY(12px);
+}
+
+#infoHead {
+    width: 100%;
+    position: fixed;
+    border-radius: 10px;
+    border-bottom: 1px solid var(--color-secondary);
+    text-align: left;
+    background-color: rgba(10, 10, 10, 0.7);
+    z-index: 99;
+}
+
+#infoHead ul {
+    display: inline-block;
+    width: 90%;
+}
+
+#infoHead ul li {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#modelName {
+    font-size: 20px;
+    transform: translateY(-15px);
+    padding-right: 20px;
+}
+
+#infoHead ul li a {
+    font-size: 20px;
+    text-decoration: none;
+    transform: translateY(-20px);
+}
+
+#settings i {
+    text-align: right;
+    top: 0;
+    right: 0;
+    position: absolute;
+    padding: 10px;
+}
+
+#inputForm {
+    font-size: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background-color: rgba(10, 10, 10, 0.7);
+    border-top: 1px solid var(--color-secondary);
+    border-radius: 10px;
+    z-index: 999;
+}
+
+#dataDiv {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#dataDiv {
+    padding-top: 35%;
+    position: relative;
+    overflow-y: scroll;
+    height: calc(90% - 70px);
+}
+
+#placeholderText {
+    padding-top: calc(100% + 100px);
+    opacity: .6;
+    font-size: smaller;
+    padding-bottom: 70px;
+}
+
+#dataDiv::-webkit-scrollbar {
+    display: none;
+}
+
+@media screen and (max-width: 450px) {
+    #mainContainer {
+        width: 95%;
+    }
+}
+
+.chatBotText, .userText {
+    display: inline-block;
+    word-wrap: break-word;
+}
+
+.chatBotText {
+    text-align: left;
+    max-width: 60%;
+    padding: 15px 15px 15px 15px;
+    border-radius: 20px;
+    background-color: var(--color-secondary);
+    margin-left: 15px;
+}
+
+.userText {
+    text-align: right;
+    max-width: 60%;
+    padding: 15px 15px 15px 15px;
+    margin-right: 15px;
+    border-radius: 20px;
+    background-color: var(--color-primary);
+}
+
+.messageHolderBot {
+    width: 100%;
+    text-align: left;
+}
+
+.messageHolderUser {
+    width: 100%;
+    text-align: right;
+}
